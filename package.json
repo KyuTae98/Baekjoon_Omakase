@@ -1,0 +1,23 @@
+{
+  "name": "baekjoon_omakase",
+  "version": "1.0.0",
+  "description": "",
+  "main": "crawling.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KyuTae98/Baekjoon_Omakase.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KyuTae98/Baekjoon_Omakase/issues"
+  },
+  "homepage": "https://github.com/KyuTae98/Baekjoon_Omakase#readme",
+  "dependencies": {
+    "cheerio-httpcli": "^0.8.3"
+  }
+}
