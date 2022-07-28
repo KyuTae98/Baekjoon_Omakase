@@ -1,3 +1,5 @@
 .vs/
 
 node_module/
+
+.editorconfig
