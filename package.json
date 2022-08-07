@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/KyuTae98/Baekjoon_Omakase#readme",
   "dependencies": {
+    "axios": "^0.27.2",
+    "cheerio": "^1.0.0-rc.12",
     "cheerio-httpcli": "^0.8.3",
     "express": "^4.18.1"
   },
