@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import LoginForm from "./LoginForm.js"
+import IdForm from "./IdForm.js"
 
 
 const StyledLogin = styled.section`
@@ -12,12 +12,13 @@ const StyledLogin = styled.section`
     border-radius: 8px;
     margin:20% 8%;
 `
-const Login = () => {
+
+const LoginForm = () => {
     return (
         <StyledLogin>
-            <LoginForm></LoginForm>
+            <IdForm></IdForm>
         </StyledLogin>
     )
 }
 
-export default Login;
+export default LoginForm;
