@@ -1,9 +1,21 @@
 const express = require('express');
 const app = express();
 const port = 3306;
+const cors = require('cors');
 
-const baekjoon = require('./baekjoon.js');
+//const authRouter = require('./routes/auth');
+const userRouter = require('./routes/routetest');
 
+app.get('/', (req, res) => {
+    res.json({
+        success: true,
+    })
+})
+
+//app.use('',authRouter);
+app.use('',userRouter);
+
+/*
 app.get('/userid/:id', (req, res) => {
 
 
@@ -31,12 +43,10 @@ app.get('/userid/:id', (req, res) => {
         "tier": usertier
     })
 })
+*/
 
-app.get('/fail', (req, res) => {
-    res.json({
-        success: false,
-    })
-})
+
+
 
 app.listen(port, () => {
     console.log('server is listening at localhost:${port}');
