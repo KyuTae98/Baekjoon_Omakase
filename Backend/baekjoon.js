@@ -33,8 +33,8 @@ class baekjoon {
                     const Tstr = html.toString();
                     tier = Tstr.split('/')[4].split('.')[0];
 
-                    //console.log(solved);
-                    //console.log(T);
+                    console.log(solved);
+                    console.log(T);
                 });
 
                 res(tier)
@@ -42,11 +42,9 @@ class baekjoon {
          }
 
          data(userid).then(function (res) {
-             //console.log(res);
+             console.log(res);
          })
-
     }
-    
 }
 
 module.exports = baekjoon;

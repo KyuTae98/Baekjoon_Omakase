@@ -4,7 +4,7 @@ const port = 3306;
 
 const baekjoon = require('./baekjoon.js');
 
-app.get('/userid/:id', async (req, res) => {
+app.get('/userid/:id', (req, res) => {
 
 
     const userid = req.params.id;
@@ -18,8 +18,9 @@ app.get('/userid/:id', async (req, res) => {
         })
     }
 
-    await findTier(userid).then(function(tier){
+    findTier(userid).then(function(tier){
         usertier = tier;
+        console.log(tier);
     });
 
     console.log(userid);

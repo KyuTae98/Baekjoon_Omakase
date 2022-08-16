@@ -4,7 +4,7 @@ const tier = '10';
 let page = 0;
 const url = `https://solved.ac/problems/level/15`;
 const param = {};
-const pnum = require('Pnum.js');
+const pnum = require('./Pnum.js');
 
 client.set('headers', {
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
@@ -31,7 +31,7 @@ client.fetch(url, param, function (err, $, res) {
 
 });
 
-pnum;
+//pnum;
 
 let i = 0;
 const problem = [];
