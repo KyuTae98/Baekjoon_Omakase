@@ -1,5 +1,5 @@
+.vs
 .vs/
-
-node_module/
-
+node_modules/
+node_modules
 .editorconfig
