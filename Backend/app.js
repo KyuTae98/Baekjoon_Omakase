@@ -5,15 +5,18 @@ const cors = require('cors');
 
 //const authRouter = require('./routes/auth');
 const userRouter = require('./routes/routetest');
+const baekjoonRouter = require('./routes/baekjoon_test')
 
 app.get('/', (req, res) => {
     res.json({
         success: true,
     })
+
 })
 
 //app.use('',authRouter);
 app.use('',userRouter);
+app.use('',baekjoonRouter);
 
 /*
 app.get('/userid/:id', (req, res) => {
