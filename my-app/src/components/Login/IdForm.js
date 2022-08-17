@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const StyledIdForm = styled.form`
@@ -25,33 +25,36 @@ input{
 }
 `;
 
+
+const Register = (userId) => {
+    if (userId === "")
+        return;
+    axios.post('/login', {
+        userID: userId,
+    }).then(response => {
+        console.log('Well done!');
+        console.log('User profile', response.data.user);
+        console.log('User token', response.data.jwt);
+    })
+        .catch(error => {
+            console.log(userId)
+            console.log('An error occurred:', error.response);
+        });
+}
+
+const LoginSubmit = (event) => {
+    event.preventDefault();
+    const { target: { ID: { value } } } = event
+    const { target: { ID } } = event
+    ID.value = ""
+    return value;
+}
+
 const IdForm = () => {
     const [userId, setuserId] = useState("")
-    const LoginSubmit = (event) => {
-        event.preventDefault();
-        const { target: { ID: { value } } } = event
-        const { target: { ID } } = event
-        ID.value = ""
-        setuserId(value)
-        Register()
-    }
-    const Register = () => {
-        axios.post('http://localhost:3000/login', {
-            userID: userId,
-        }).then(response => {
-            // Handle success.
-            console.log('Well done!');
-            console.log('User profile', response.data.user);
-            console.log('User token', response.data.jwt);
-        })
-            .catch(error => {
-                // Handle error.
-                console.log('An error occurred:', error.response);
-            });
-
-    }
+    useEffect(() => Register(userId), [userId])
     return (
-        <StyledIdForm onSubmit={LoginSubmit}>
+        <StyledIdForm onSubmit={(event) => setuserId(LoginSubmit(event))}>
             <label>백준 아이디를 입력해 주세요.</label>
             <div>
                 <input name="ID"></input>
