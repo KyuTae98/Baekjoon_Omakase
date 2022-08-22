@@ -1,6 +1,41 @@
 const router = require('express').Router();     //Router 사용하여 기능 별로 구분
 const client = require('cheerio-httpcli');      //웹사이트 크롤링
 
+const numTotier = [
+    'Unrated',
+    'Bronze V',
+    'Bronze IV',
+    'Bronze III',
+    'Bronze II',
+    'Bronze I',
+    'Silver V',
+    'Silver IV',
+    'Silver III',
+    'Silver II',
+    'Silver I',
+    'Gold V',
+    'Gold IV',
+    'Gold III',
+    'Gold II',
+    'Gold I',
+    'Platinum V',
+    'Platinum IV',
+    'Platinum III',
+    'Platinum II',
+    'Platinum I',
+    'Diamond V',
+    'Diamond IV',
+    'Diamond III',
+    'Diamond II',
+    'Diamond I',
+    'Ruby V',
+    'Ruby IV',
+    'Ruby III',
+    'Ruby II',
+    'Ruby I',
+    'Master',
+];
+
 //async / await 으로 Callback Hell 해결
 router.get('/baekjoon/:id',async(req,res) => {
 
@@ -116,7 +151,9 @@ router.get('/baekjoon/:id',async(req,res) => {
 
             client.fetch(url_unsol, param, function (err, $, r) {
             
-                const problem_unsolved = [];
+                const problem_unsolved = [];    //문제 저장
+                let num;                        //문제 번호 저장
+                let title;                      //문제 제목 저장
 
                 console.log("unsolved fetch start");
 
@@ -126,10 +163,20 @@ router.get('/baekjoon/:id',async(req,res) => {
                 }
 
                 $(".css-q9j30p").find("span").each((idx, node) => {
+                    
                     if(idx%2==0){
-                        
-                        problem_unsolved.push($(node).text());                       
+                        num = $(node).text();
                     }
+                    else if(idx%2==1){
+                        title = $(node).text();
+                        problem_unsolved.push({
+                            number: num,
+                            title: title,
+                            tier: numTotier[t],
+                            url: "https://www.acmicpc.net/problem/"+num,
+                        });    
+                    }
+                       
                 });
                 
                 response(problem_unsolved); 
@@ -201,7 +248,7 @@ router.get('/baekjoon/:id',async(req,res) => {
 
         //문제 정렬
         problem_all.sort(function(a,b){
-            return a-b;
+            return a.number-b.number;
         })
 
         //이미 푼 문제가 있는지 탐색
@@ -238,7 +285,7 @@ router.get('/baekjoon/:id',async(req,res) => {
       
         //정렬
         problem.sort(function(a,b){
-            return a - b;
+            return a.number - b.number;
         });
 
         //console.log(problem_all[1]);
