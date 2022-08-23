@@ -29,18 +29,16 @@ input{
 const Register = (userId) => {
     if (userId === "")
         return;
-    axios.post('/login', {
-        userID: userId,
+    axios.post(`/test/${userId}`, {
+        id: userId,
     }).then(response => {
-        console.log('Well done!');
-        console.log('User profile', response.data.user);
-        console.log('User token', response.data.jwt);
+        console.log(response);
     })
         .catch(error => {
-            console.log(userId)
-            console.log('An error occurred:', error.response);
+            console.log(error);
         });
 }
+
 
 const LoginSubmit = (event) => {
     event.preventDefault();
