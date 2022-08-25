@@ -29,13 +29,14 @@ input{
 const Register = (userId) => {
     if (userId === "")
         return;
-    axios.post(`/test/${userId}`, {
+    axios.post(`/baekjoon/${userId}`, {
         id: userId,
-    }).then(response => {
-        console.log(response);
+    }).then(res => {
+        const { data } = res;
+        console.log(data);
     })
         .catch(error => {
-            console.log(error);
+            alert("아이디가 틀렸습니다!")
         });
 }
 

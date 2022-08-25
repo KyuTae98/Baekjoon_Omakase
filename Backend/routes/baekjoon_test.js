@@ -1,5 +1,5 @@
-const router = require('express').Router();     //Router »ç¿ëÇÏ¿© ±â´É º°·Î ±¸ºÐ
-const client = require('cheerio-httpcli');      //À¥»çÀÌÆ® Å©·Ñ¸µ
+const router = require('express').Router();     //Router ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+const client = require('cheerio-httpcli');      //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Å©ï¿½Ñ¸ï¿½
 
 const numTotier = [
     'Unrated',
@@ -36,11 +36,11 @@ const numTotier = [
     'Master',
 ];
 
-//async / await À¸·Î Callback Hell ÇØ°á
-router.get('/baekjoon/:id',async(req,res) => {
+//async / await ï¿½ï¿½ï¿½ï¿½ Callback Hell ï¿½Ø°ï¿½
+router.post('/baekjoon/:id', async (req, res) => {
 
-    const userid = await req.params.id;                     //parameter id¸¦ userid¿¡ ÀúÀå
-    const url = `https://www.acmicpc.net/user/` + userid;   //ÇØ´ç À¯Àú¸¦ °Ë»öÇÏµµ·Ï url ÁöÁ¤
+    const userid = await req.params.id;                     //parameter idï¿½ï¿½ useridï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    const url = `https://www.acmicpc.net/user/` + userid;   //ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Ïµï¿½ï¿½ï¿½ url ï¿½ï¿½ï¿½ï¿½
     const param = {};
 
     client.set('headers', {
@@ -48,12 +48,12 @@ router.get('/baekjoon/:id',async(req,res) => {
         'Accept-Charset': 'utf-8'
     });
 
-    //tier °è»ê
-    function tier(userid){
-        
-        //Pormise·Î À¯Àú Æ¼¾î ¹ÝÈ¯
-        return new Promise ((response,rej)=>{
-            
+    //tier ï¿½ï¿½ï¿½
+    function tier(userid) {
+
+        //Pormiseï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ¼ï¿½ï¿½ ï¿½ï¿½È¯
+        return new Promise((response, rej) => {
+
             client.fetch(url, param, function (err, $, r) {
 
                 console.log("tier fetch start");
@@ -65,28 +65,28 @@ router.get('/baekjoon/:id',async(req,res) => {
                     return;
                 }
 
-                const html = $(".page-header").find("a").html();    //À¯Àú Æ¼¾î°¡ Æ÷ÇÔµÈ html ÀúÀå
-                const Tstr = html.toString();                       //htmlÀ» stringÀ¸·Î º¯È¯
-                tier = Tstr.split('/')[4].split('.')[0];            // '/' ¿Í '.' À¸·Î °¢°¢ ³ª´²ÁØ ÈÄ¿¡ tier¿¡ ÀúÀå
-                response(tier);                                     //tier response·Î ¹ÝÈ¯
+                const html = $(".page-header").find("a").html();    //ï¿½ï¿½ï¿½ï¿½ Æ¼ï¿½î°¡ ï¿½ï¿½ï¿½Ôµï¿½ html ï¿½ï¿½ï¿½ï¿½
+                const Tstr = html.toString();                       //htmlï¿½ï¿½ stringï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
+                tier = Tstr.split('/')[4].split('.')[0];            // '/' ï¿½ï¿½ '.' ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¿ï¿½ tierï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                response(tier);                                     //tier responseï¿½ï¿½ ï¿½ï¿½È¯
             });
-            
+
         })
     }
 
-    function solved(userid){
-        
-        //Pormise·Î Ç¬ ¹®Á¦µé ¹ÝÈ¯
-        return new Promise ((response,rej)=>{
-        /*
-            client.set('headers', {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
-                'Accept-Charset': 'utf-8'
-            });
-            */
+    function solved(userid) {
+
+        //Pormiseï¿½ï¿½ Ç¬ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
+        return new Promise((response, rej) => {
+            /*
+                client.set('headers', {
+                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
+                    'Accept-Charset': 'utf-8'
+                });
+                */
 
             client.fetch(url, param, function (err, $, r) {
-            
+
                 const problem_solved = [];
 
                 console.log("solved fetch start");
@@ -97,16 +97,16 @@ router.get('/baekjoon/:id',async(req,res) => {
                 }
 
                 $("div:nth-child(2) > div.panel-body > div").find("a").each((idx, node) => {
-                    problem_solved.push($(node).text());               
+                    problem_solved.push($(node).text());
                 });
-                
-                response(problem_solved); 
+
+                response(problem_solved);
             });
         })
     }
 
-    function pagenum(t){
-        return new Promise(function(response,rej){
+    function pagenum(t) {
+        return new Promise(function (response, rej) {
 
             const url_tier = 'https://solved.ac/problems/level/' + t;
             //console.log(url);
@@ -117,7 +117,7 @@ router.get('/baekjoon/:id',async(req,res) => {
             });
             */
             client.fetch(url_tier, param, function (err, $, r) {
-            
+
                 const page = [];
 
                 console.log("page num start");
@@ -128,19 +128,19 @@ router.get('/baekjoon/:id',async(req,res) => {
                 }
 
                 $(".css-18lc7iz").find('a').each((idx, node) => {
-                        page.push($(node).text());                    
+                    page.push($(node).text());
                 });
-                
+
                 //console.log(page);
 
-                response(page[page.length-1]); 
+                response(page[page.length - 1]);
             });
         });
     }
 
-    function unsolved(t,n){
-        return new Promise( function(response,rej){
-            const url_unsol = 'https://solved.ac/problems/level/' + t + '?page='+n;
+    function unsolved(t, n) {
+        return new Promise(function (response, rej) {
+            const url_unsol = 'https://solved.ac/problems/level/' + t + '?page=' + n;
             //console.log(url);
             /*
             client.set('headers', {
@@ -150,10 +150,10 @@ router.get('/baekjoon/:id',async(req,res) => {
             */
 
             client.fetch(url_unsol, param, function (err, $, r) {
-            
-                const problem_unsolved = [];    //¹®Á¦ ÀúÀå
-                let num;                        //¹®Á¦ ¹øÈ£ ÀúÀå
-                let title;                      //¹®Á¦ Á¦¸ñ ÀúÀå
+
+                const problem_unsolved = [];    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                let num;                        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½
+                let title;                      //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
                 console.log("unsolved fetch start");
 
@@ -163,145 +163,145 @@ router.get('/baekjoon/:id',async(req,res) => {
                 }
 
                 $(".css-q9j30p").find("span").each((idx, node) => {
-                    
-                    if(idx%2==0){
+
+                    if (idx % 2 == 0) {
                         num = $(node).text();
                     }
-                    else if(idx%2==1){
+                    else if (idx % 2 == 1) {
                         title = $(node).text();
                         problem_unsolved.push({
                             number: num,
                             title: title,
                             tier: numTotier[t],
-                            url: "https://www.acmicpc.net/problem/"+num,
-                        });    
+                            url: "https://www.acmicpc.net/problem/" + num,
+                        });
                     }
-                       
+
                 });
-                
-                response(problem_unsolved); 
+
+                response(problem_unsolved);
             });
         });
     }
 
-    try{
-        
-        let problem_solved = [];    //Ç¬ ¹®Á¦µé ÀúÀå
-        let problem_all = ['0'];       //ÀüÃ¼ ¹®Á¦µé ÀúÀå
-        let Tier;                   //À¯Àú Æ¼¾î ÀúÀå
-        let pageNumber;             //¸¶Áö¸· ÆäÀÌÁö
+    try {
 
-        //À¯Àú Æ¼¾î ÀúÀå
-        await tier(userid).then((T)=>{
+        let problem_solved = [];    //Ç¬ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        let problem_all = ['0'];       //ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        let Tier;                   //ï¿½ï¿½ï¿½ï¿½ Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        let pageNumber;             //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
+        //ï¿½ï¿½ï¿½ï¿½ Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        await tier(userid).then((T) => {
             Tier = T;
         })
 
         console.log(Tier);
-        if(Tier=="iderr"){
+        if (Tier == "iderr") {
             return res.status(404).json({
-                errorcode: "iderr", 
+                errorcode: "iderr",
             })
         }
 
-        //À¯Àú°¡ Ç¬ ¹®Á¦ Å©·Ñ¸µ
-        await solved(userid).then((P)=>{
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ç¬ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½Ñ¸ï¿½
+        await solved(userid).then((P) => {
             problem_solved = P;
         });
 
-        //À¯Àú Æ¼¾î¿¡ ÇØ´çÇÏ´Â ¹®Á¦ ¸¶Áö¸· ÆäÀÌÁö ÀúÀå
-        await pagenum(Tier).then((num)=>{
+        //ï¿½ï¿½ï¿½ï¿½ Æ¼ï¿½î¿¡ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        await pagenum(Tier).then((num) => {
             pageNumber = num;
         })
 
-        //¸¶Áö¸· ÆäÀÌÁö±îÁö ¹®Á¦ Å½»ö
-        for(let n = 1;n<=pageNumber;n++){
-            await unsolved(Tier,n).then((P)=>{
-                problem_all = P.concat(problem_all,P);
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å½ï¿½ï¿½
+        for (let n = 1; n <= pageNumber; n++) {
+            await unsolved(Tier, n).then((P) => {
+                problem_all = P.concat(problem_all, P);
             });
         }
 
-        //À¯Àú Æ¼¾î-1 ¿¡ ÇØ´çÇÏ´Â ¹®Á¦ ¸¶Áö¸· ÆäÀÌÁö ÀúÀå
-        await pagenum(Tier-1).then((num)=>{
+        //ï¿½ï¿½ï¿½ï¿½ Æ¼ï¿½ï¿½-1 ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        await pagenum(Tier - 1).then((num) => {
             pageNumber = num;
         })
 
-        //¸¶Áö¸· ÆäÀÌÁö±îÁö ¹®Á¦ Å½»ö
-        for(let n = 1;n<=pageNumber;n++){
-            await unsolved(Tier-1,n).then((P)=>{
-                problem_all = P.concat(problem_all,P);
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å½ï¿½ï¿½
+        for (let n = 1; n <= pageNumber; n++) {
+            await unsolved(Tier - 1, n).then((P) => {
+                problem_all = P.concat(problem_all, P);
             });
         }
 
-        //À¯Àú Æ¼¾î+1 ¿¡ ÇØ´çÇÏ´Â ¹®Á¦ ¸¶Áö¸· ÆäÀÌÁö ÀúÀå
-        await pagenum(parseInt(Tier)+1).then((num)=>{
+        //ï¿½ï¿½ï¿½ï¿½ Æ¼ï¿½ï¿½+1 ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        await pagenum(parseInt(Tier) + 1).then((num) => {
             pageNumber = num;
         })
 
-        //¸¶Áö¸· ÆäÀÌÁö±îÁö ¹®Á¦ Å½»ö
-        for(let n = 1;n<=pageNumber;n++){
-            await unsolved(parseInt(Tier)+1,n).then((P)=>{
-                problem_all = P.concat(problem_all,P);
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å½ï¿½ï¿½
+        for (let n = 1; n <= pageNumber; n++) {
+            await unsolved(parseInt(Tier) + 1, n).then((P) => {
+                problem_all = P.concat(problem_all, P);
             });
         }
 
         //console.log(problem_all.length);
 
-        //¹®Á¦ Á¤·Ä
-        problem_all.sort(function(a,b){
-            return a.number-b.number;
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        problem_all.sort(function (a, b) {
+            return a.number - b.number;
         })
 
-        //ÀÌ¹Ì Ç¬ ¹®Á¦°¡ ÀÖ´ÂÁö Å½»ö
-        for(let i = 0;i<problem_solved.length;i++){
-            //indexOf ÇÔ¼ö·Î ¹è¿­³»¿¡ ÇØ´ç °ªÀÌ ÀÖ´ÂÁö È®ÀÎ
+        //ï¿½Ì¹ï¿½ Ç¬ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ Å½ï¿½ï¿½
+        for (let i = 0; i < problem_solved.length; i++) {
+            //indexOf ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
             const idx = problem_all.indexOf(problem_solved[i]);
-            if(idx!=-1){
-                //ÇØ´ç °ª ¹è¿­¿¡¼­ Á¦°Å
-                problem_all.splice(idx,1);
+            if (idx != -1) {
+                //ï¿½Ø´ï¿½ ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                problem_all.splice(idx, 1);
             }
         }
-    
-        //¾î´À ÆäÀÌÁö¿¡ ÀÖ´Â ¹®Á¦¸¦ Ç®Áö ·£´ýÀ¸·Î ¼±ÅÃ
-        const rand_1 = Math.floor(Math.random()*(problem_all.length)+1);
-        let rand_2 = Math.floor(Math.random()*(problem_all.length)+1);
-        let rand_3 = Math.floor(Math.random()*(problem_all.length)+1);
 
-        //¹®Á¦°¡ ÀüºÎ ´Ù¸£°Ô ¼¼ÆÃ
-        while(rand_1 == rand_2){
-            rand_2 = Math.floor(Math.random()*(problem_all.length)+1);
-        }
-        
-        //¹®Á¦°¡ ÀüºÎ ´Ù¸£°Ô ¼¼ÆÃ
-        while(rand_1 == rand_3 || rand_2 == rand_3){
-            rand_3 = Math.floor(Math.random()*(problem_all.length)+1);
+        //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ç®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        const rand_1 = Math.floor(Math.random() * (problem_all.length) + 1);
+        let rand_2 = Math.floor(Math.random() * (problem_all.length) + 1);
+        let rand_3 = Math.floor(Math.random() * (problem_all.length) + 1);
+
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        while (rand_1 == rand_2) {
+            rand_2 = Math.floor(Math.random() * (problem_all.length) + 1);
         }
 
-        //·£´ý ¹®Á¦ problem¿¡ ÀúÀå
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        while (rand_1 == rand_3 || rand_2 == rand_3) {
+            rand_3 = Math.floor(Math.random() * (problem_all.length) + 1);
+        }
+
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ problemï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         const problem = [];
 
         problem.push(problem_all[rand_1]);
         problem.push(problem_all[rand_2]);
         problem.push(problem_all[rand_3]);
-      
-        //Á¤·Ä
-        problem.sort(function(a,b){
+
+        //ï¿½ï¿½ï¿½ï¿½
+        problem.sort(function (a, b) {
             return a.number - b.number;
         });
 
         //console.log(problem_all[1]);
         //console.log(problem_all[problem_all.length-1]);
 
-        //¼±ÅÃÇÑ ¹®Á¦µé ¹ÝÈ¯
-        return  res.json(problem);
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
+        return res.json(problem);
 
-    } catch(e){
+    } catch (e) {
         console.error(e);
         return res.status(500).json({
             error: e,
             errorString: e.toString(),
         });
     }
-    
+
 });
 
 module.exports = router;

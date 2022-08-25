@@ -1,20 +1,29 @@
 const express = require('express');
 const app = express();
-const port = 3306;
+const port = 3000
+const path = require('path')
 const cors = require('cors');
 
 //const authRouter = require('./routes/auth');
 const baekjoonRouter = require('./routes/baekjoon_test')
 
-app.get('/', (req, res) => {
+
+app.use(express.static(path.join(__dirname, '../my-app/build')))
+
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, '../my-app/build/index.html'))
+})
+
+
+/*app.get('/', (req, res) => {
     res.json({
         success: true,
     })
 
-})
+})*/
 
 //app.use('',authRouter);
-app.use('',baekjoonRouter);
+app.use('', baekjoonRouter);
 
 /*
 app.get('/userid/:id', (req, res) => {
@@ -50,5 +59,5 @@ app.get('/userid/:id', (req, res) => {
 
 
 app.listen(port, () => {
-    console.log('server is listening at localhost:${port}');
+    console.log(`server is listening at localhost:${port}`);
 })
