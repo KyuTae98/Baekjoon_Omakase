@@ -10,7 +10,7 @@ const StyledLogin = styled.section`
     width:280px;
     height:280px;
     border-radius: 8px;
-    margin:20% 8%;
+    margin:200px;
 `
 
 const LoginForm = () => {

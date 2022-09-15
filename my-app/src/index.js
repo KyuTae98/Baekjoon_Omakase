@@ -1,7 +1,14 @@
 import { createRoot } from 'react-dom/client'
-import LoginPage from './page/LoginPage.js'
+import { Provider } from 'react-redux'
+import App from "./App.js"
+import store from './store/index.js';
 import './index.css';
+
 
 const container = document.getElementById("root");
 const root = createRoot(container);
-root.render(<LoginPage />);
+root.render(
+    <Provider store={store}>
+        < App />
+    </Provider>
+);

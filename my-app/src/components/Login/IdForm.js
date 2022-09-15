@@ -1,6 +1,8 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { inputaction } from "../../store/input";
 import axios from "axios";
+
 
 const StyledIdForm = styled.form`
 display: flex;
@@ -26,34 +28,36 @@ input{
 `;
 
 
-const Register = (userId) => {
-    if (userId === "")
-        return;
-    axios.post(`/baekjoon/${userId}`, {
-        id: userId,
-    }).then(res => {
-        const { data } = res;
-        console.log(data);
-    })
-        .catch(error => {
+const IdForm = (props) => {
+    const dispatch = useDispatch();
+
+    const submituUerId = (value) => {
+        Register(value)
+    }
+
+    const Register = (userId) => {
+        if (userId === "")
+            return;
+        axios.post(`/baekjoon/${userId}`, {
+            id: userId,
+        }).then(res => {
+            const { data } = res;
+            dispatch(inputaction.addUserData(data))
+        }).catch(error => {
             alert("아이디가 틀렸습니다!")
         });
-}
+    }
 
+    const LoginSubmit = (event) => {
+        event.preventDefault();
+        const { target: { ID: { value } } } = event
+        const { target: { ID } } = event
+        ID.value = ""
+        submituUerId(value)
+    }
 
-const LoginSubmit = (event) => {
-    event.preventDefault();
-    const { target: { ID: { value } } } = event
-    const { target: { ID } } = event
-    ID.value = ""
-    return value;
-}
-
-const IdForm = () => {
-    const [userId, setuserId] = useState("")
-    useEffect(() => Register(userId), [userId])
     return (
-        <StyledIdForm onSubmit={(event) => setuserId(LoginSubmit(event))}>
+        <StyledIdForm onSubmit={LoginSubmit}>
             <label>백준 아이디를 입력해 주세요.</label>
             <div>
                 <input name="ID"></input>
