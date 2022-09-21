@@ -18,3 +18,9 @@ body {
     padding: 0;
     height: 100%;
 }
+
+.probrem {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}

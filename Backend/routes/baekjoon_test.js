@@ -40,7 +40,7 @@ const numTotier = [
 router.post('/baekjoon/:id', async (req, res) => {
 
     const userid = await req.params.id;                     //parameter id�� userid�� ����
-    const url = `https://www.acmicpc.net/user/` + userid;   //�ش� ������ �˻��ϵ��� url ����
+    const url = `https://www.acmicpc.net/user/` + userid;
     const param = {};
 
     client.set('headers', {
@@ -48,10 +48,10 @@ router.post('/baekjoon/:id', async (req, res) => {
         'Accept-Charset': 'utf-8'
     });
 
-    //tier ���
+    //tier 
     function tier(userid) {
 
-        //Pormise�� ���� Ƽ�� ��ȯ
+        //Pormise
         return new Promise((response, rej) => {
 
             client.fetch(url, param, function (err, $, r) {
@@ -186,12 +186,12 @@ router.post('/baekjoon/:id', async (req, res) => {
 
     try {
 
-        let problem_solved = [];    //Ǭ ������ ����
-        let problem_all = ['0'];       //��ü ������ ����
-        let Tier;                   //���� Ƽ�� ����
-        let pageNumber;             //������ ������
+        let problem_solved = [];
+        let problem_all = ['0'];
+        let Tier;
+        let pageNumber;
 
-        //���� Ƽ�� ����
+
         await tier(userid).then((T) => {
             Tier = T;
         })
@@ -203,41 +203,39 @@ router.post('/baekjoon/:id', async (req, res) => {
             })
         }
 
-        //������ Ǭ ���� ũ�Ѹ�
+
         await solved(userid).then((P) => {
             problem_solved = P;
         });
 
-        //���� Ƽ� �ش��ϴ� ���� ������ ������ ����
         await pagenum(Tier).then((num) => {
             pageNumber = num;
         })
 
-        //������ ���������� ���� Ž��
+
         for (let n = 1; n <= pageNumber; n++) {
             await unsolved(Tier, n).then((P) => {
                 problem_all = P.concat(problem_all, P);
             });
         }
 
-        //���� Ƽ��-1 �� �ش��ϴ� ���� ������ ������ ����
+
         await pagenum(Tier - 1).then((num) => {
             pageNumber = num;
         })
 
-        //������ ���������� ���� Ž��
+
         for (let n = 1; n <= pageNumber; n++) {
             await unsolved(Tier - 1, n).then((P) => {
                 problem_all = P.concat(problem_all, P);
             });
         }
 
-        //���� Ƽ��+1 �� �ش��ϴ� ���� ������ ������ ����
+
         await pagenum(parseInt(Tier) + 1).then((num) => {
             pageNumber = num;
         })
 
-        //������ ���������� ���� Ž��
         for (let n = 1; n <= pageNumber; n++) {
             await unsolved(parseInt(Tier) + 1, n).then((P) => {
                 problem_all = P.concat(problem_all, P);
@@ -246,52 +244,47 @@ router.post('/baekjoon/:id', async (req, res) => {
 
         //console.log(problem_all.length);
 
-        //���� ����
+
         problem_all.sort(function (a, b) {
             return a.number - b.number;
         })
 
-        //�̹� Ǭ ������ �ִ��� Ž��
+
         for (let i = 0; i < problem_solved.length; i++) {
-            //indexOf �Լ��� �迭���� �ش� ���� �ִ��� Ȯ��
+            //indexOf
             const idx = problem_all.indexOf(problem_solved[i]);
             if (idx != -1) {
-                //�ش� �� �迭���� ����
+
                 problem_all.splice(idx, 1);
             }
         }
 
-        //��� �������� �ִ� ������ Ǯ�� �������� ����
+
         const rand_1 = Math.floor(Math.random() * (problem_all.length) + 1);
         let rand_2 = Math.floor(Math.random() * (problem_all.length) + 1);
         let rand_3 = Math.floor(Math.random() * (problem_all.length) + 1);
 
-        //������ ���� �ٸ��� ����
         while (rand_1 == rand_2) {
             rand_2 = Math.floor(Math.random() * (problem_all.length) + 1);
         }
 
-        //������ ���� �ٸ��� ����
         while (rand_1 == rand_3 || rand_2 == rand_3) {
             rand_3 = Math.floor(Math.random() * (problem_all.length) + 1);
         }
 
-        //���� ���� problem�� ����
         const problem = [];
 
         problem.push(problem_all[rand_1]);
         problem.push(problem_all[rand_2]);
         problem.push(problem_all[rand_3]);
 
-        //����
         problem.sort(function (a, b) {
             return a.number - b.number;
         });
 
-        //console.log(problem_all[1]);
+        console.log(problem_all[1]);
         //console.log(problem_all[problem_all.length-1]);
 
-        //������ ������ ��ȯ
         return res.json(problem);
 
     } catch (e) {

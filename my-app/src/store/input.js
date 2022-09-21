@@ -5,7 +5,7 @@ const inputSlice = createSlice({
     name: 'user',
     initialState: {
         userAuthe: false,
-        userData: {}
+        userData: []
     },
     reducers: {
         addUserData(state, action) {

@@ -13,14 +13,16 @@ const LoginPage = () => {
         <div className='Page'>
             <Fragment>
                 <BeacjunLabel />
-                {isInput && userData.map(items => {
-                    <Recom
-                        number={items.name}
-                        title={items.name}
-                        tier={items.name}
-                        url={items.name}
-                    />
-                })}
+                <ul className='probrem'>
+                    {isInput && userData.map(items => (
+                        <Recom
+                            number={items.number}
+                            title={items.title}
+                            tier={items.tier}
+                            url={items.url}
+                        />
+                    ))}
+                </ul>
                 {!isInput && <LoginForm />}
             </Fragment>
         </div>
