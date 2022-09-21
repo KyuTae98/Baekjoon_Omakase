@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src",
     "start:dev": "nodemon --watch src/ src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext js,jsx,tx,tsx --fix"
   },
   "repository": {
     "type": "git",
