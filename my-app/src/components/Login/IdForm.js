@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { inputaction } from "../../store/input";
 import axios from "axios";
@@ -31,10 +32,6 @@ input{
 const IdForm = (props) => {
     const dispatch = useDispatch();
 
-    const submituUerId = (value) => {
-        Register(value)
-    }
-
     const Register = (userId) => {
         if (userId === "")
             return;
@@ -44,6 +41,7 @@ const IdForm = (props) => {
             const { data } = res;
             dispatch(inputaction.addUserData(data))
         }).catch(error => {
+            dispatch(inputaction.makeLogin())
             alert("아이디가 틀렸습니다!")
         });
     }
@@ -53,7 +51,8 @@ const IdForm = (props) => {
         const { target: { ID: { value } } } = event
         const { target: { ID } } = event
         ID.value = ""
-        submituUerId(value)
+        dispatch(inputaction.makeLoding())
+        Register(value)
     }
 
     return (

@@ -4,17 +4,23 @@ import { createSlice } from "@reduxjs/toolkit";
 const inputSlice = createSlice({
     name: 'user',
     initialState: {
-        userAuthe: false,
+        userAuthe: 1,
         userData: []
     },
     reducers: {
         addUserData(state, action) {
-            state.userAuthe = true;
+            state.userAuthe = 3;
             state.userData = action.payload
         },
+        makeLogin(state) {
+            state.userAuthe = 1;
+        },
+        makeLoding(state) {
+            state.userAuthe = 2;
+        },
         removeData(state) {
-            state.userAuthe = false;
-            state.userData = {};
+            state.userAuthe = 1;
+            state.userData = [];
         }
     }
 });

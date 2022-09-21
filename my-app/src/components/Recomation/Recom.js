@@ -1,9 +1,6 @@
 import styled from "styled-components";
 
 const StyledRecom = styled.div`
-display:flex;
-justify-content:center;
-text-align:center;
 background-color:white;
 width:280px;
 height:280px;
@@ -17,7 +14,7 @@ const Recom = (props) => {
             <header>
                 <h3>{title}</h3>
             </header>
-            <h4>{number}</h4>
+            <p><h4>{number}</h4></p>
             <h4>{tier}</h4>
         </StyledRecom>
     )
